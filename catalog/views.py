@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import ProductForm, ProductModeratorForm
 from .models import Product
+from django.shortcuts import render
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -61,3 +62,9 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
 class ProductTemplateView(TemplateView):
     model = Product
     template_name = "catalog/contacts.html"
+
+    def home(request):
+        return render(request, 'home.html')
+
+    def contacts(request):
+        return render(request, 'contacts.html')
