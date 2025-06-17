@@ -1,4 +1,4 @@
-rom django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
