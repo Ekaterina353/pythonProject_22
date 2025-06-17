@@ -10,8 +10,8 @@ class Category(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'category'
-        verbose_name_plural = 'categories'
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
         ordering = ['name']
 
 
@@ -31,8 +31,8 @@ class Product(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'product'
-        verbose_name_plural = 'products'
+        verbose_name = 'Продукт'
+        verbose_name_plural = 'Продукты'
         ordering = ['name', 'price', 'created_at', 'category']
         permissions = [
             ('can_unpublish_product', 'Can unpublish product'),

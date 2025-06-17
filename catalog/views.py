@@ -1,13 +1,11 @@
-from django.core.exceptions import PermissionDenied
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
+rom django.core.exceptions import PermissionDenied
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import ProductForm, ProductModeratorForm
-from .models import Product, Category
-from .services import ProductService
+from .models import Product
+from django.shortcuts import render
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
@@ -39,7 +37,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         raise PermissionDenied
 
 
-@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
@@ -52,7 +49,7 @@ class ProductListView(ListView):
     context_object_name = 'products'
 
 
-class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView, UserPassesTestMixin):
     model = Product
     template_name = 'catalog/product_confirm_delete.html'
     success_url = reverse_lazy('catalog:product_list')
@@ -66,24 +63,8 @@ class ProductTemplateView(TemplateView):
     model = Product
     template_name = "catalog/contacts.html"
 
+    def home(request):
+        return render(request, 'home.html')
 
-class Category3ListView(ListView):
-    model = Category
-    template_name = "catalog/category_3_list.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        category_id = '3'
-        context['product_list'] = ProductService.get_category_list(category_id)
-        return context
-
-
-class Category4ListView(ListView):
-    model = Category
-    template_name = "catalog/category_4_list.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        category_id = '4'
-        context['product_list'] = ProductService.get_category_list(category_id)
-        return context
+    def contacts(request):
+        return render(request, 'contacts.html')
