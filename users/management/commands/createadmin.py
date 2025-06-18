@@ -8,8 +8,8 @@ class Command(BaseCommand):
         user = get_user_model()
         user = user.objects.create(
             email='skystore.blog@mail.ru',
-            first_name='Den',
-            last_name='Yukin'
+            first_name='Geen',
+            last_name='Kin'
         )
         user.set_password('1234')
         user.is_staff = True
